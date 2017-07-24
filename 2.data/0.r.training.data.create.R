@@ -1,6 +1,6 @@
 rm(list = ls())
 
-wd <- "C:/Users/gbal/Desktop/github.work/r.training/2.data"
+wd <- "C:/Users/guillaume/Desktop/r.training/2.data"
 setwd(wd)
 
 #library for xlsx file
@@ -85,7 +85,7 @@ wild.row.max <- max(which(salmons$wild == 1))
 salmons$river.age[1:wild.row.max] <- sample(size = wild.row.max, x = 1:3, prob = c(0.4, 0.5, 0.10), replace = T)
 salmons$river.age[(wild.row.max + 1):dim(salmons)[1]] <- sample(size = dim(salmons)[1] - wild.row.max, x = 1:3, prob = c(0.8, .19, 0.01), replace = T)
 
-hist(salmons$river.age ~ salmons$wild )  
+barplot(table(salmons$river.age, salmons$wild))  
 
 # salmon river ========================================================
 
@@ -130,20 +130,9 @@ plot(salmons$length, salmons$weight, col = salmons$wild)
 
 # sea lice infection logit age ==================================================================
 
-salmons$sea.lice <- inv.logit( -2 + 0.075 * (salmons$length - mean(salmons$length)) + rnorm(dim(salmons)[1], 0, .2))
+salmons$sea.lice <- inv.logit(-2 + 0.075 * (salmons$length - mean(salmons$length)) + rnorm(dim(salmons)[1], 0, .2))
 salmons$sea.lice <- rbinom(n = dim(salmons)[1], size = 1 ,  prob = salmons$sea.lice)
 plot(salmons$length, salmons$sea.lice)
-
-# add NA in data ===================================================
-
-n.na <- 300
-
-# pick random location for na
-na.rows <- sample(size = n.na, x = 1:dim(salmons)[1], replace = F)
-na.cols <- sample(size = n.na, x = 1:dim(salmons)[2], replace = T)
-
-# modify to na
-for (i in 1: n.na) salmons[na.rows[i], na.cols[i]] <- NA
 
 # weight outliers, grams instead kg  ===============================================
 
@@ -159,6 +148,18 @@ salmons$sea.lice <- as.logical(salmons$sea.lice)
 
 # break lines order ==================================================================
 salmons <- salmons[sample(size = dim(salmons)[1] , x = 1:dim(salmons)[1], replace = F), ]
+
+
+# add NA in data ===================================================
+
+n.na <- 300
+
+# pick random location for na
+na.rows <- sample(size = n.na, x = 1:dim(salmons)[1], replace = F)
+na.cols <- sample(size = n.na, x = 1:dim(salmons)[2], replace = T)
+
+# modify to na
+#for (i in 1: n.na) salmons[na.rows[i], na.cols[i]] <- NA
 
 # write data in files =================================================================
 
