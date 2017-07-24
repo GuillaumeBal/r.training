@@ -2,7 +2,7 @@
 rm(list = ls())
 
 # set directory
-wd <- "C:/Users/gbal/Desktop/github.work/r.training/3.code"
+wd <- "C:/Users/gbal/Desktop/r.training/3.code"
 setwd(wd)
 
 # create data for example ==================================================

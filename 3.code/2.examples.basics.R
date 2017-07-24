@@ -216,6 +216,7 @@ print(vect1.1)
 ## Levels (factor only):
 print(fact1)
 levels(fact1)   # reminder on how to query
+nlevels(fact1)
 
 as.numeric(fact1)
 
@@ -268,6 +269,9 @@ c(1, 2, 3) == c(1.000, 2.000, 3.000001)
 
 c(2, sqrt(3)^2) == c(2, 3)   # Beware of the machine precision ! 
                              #   (this is obviously a wrong outcome)
+all.equal(c(2, sqrt(3)^2), c(2, 3))
+
+c(2, sqrt(3)^2) - c(2, 3)
 
 c(5, 3, 2, 3.01) > 3
 c(5, 3, 2, 3.01) >= 3
