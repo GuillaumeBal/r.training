@@ -8,27 +8,28 @@ require(openxlsx)
 # library for direchlet distribution
 require(gtools)
 
-################## number of  years ######################################
+# number of  years ==============================================
 
 year.start <- 2000
 year.end <- 2017
 n.years <- year.end - year.start + 1
 
-################# abundance wild fish, decreasing with time ################
-### decreasing abundance throug time with noise
+# decresing abundance wild fish ====================================
 
-wild.abundances <- ceiling(1000 - seq(from = 0, to = 300, length.out = n.years) + rnorm(n = n.years, mean = 0, sd = 100))
+wild.abundances.start <- 1000
+wild.abundances.cv <- .1
+wild.abundances <- seq(from = wild.abundances.start , to = wild.abundances.start / 3, length.out = n.years)
+wild.abundances <- round(rnorm(n = n.years, mean = wild.abundances, sd = wild.abundances * wild.abundances.cv), 0) # noise
 plot(wild.abundances)
 
-################### ranched fish abundance ##################### 
-### 1.5 times more ranched than wild in average
+# ratio abundance ranched fish abundance ======================================== 
 
-ranched.abundances <- ceiling(wild.abundances * rnorm(n = n.years, mean = 1.5, sd = .15))
+ratio.wild.farmed <- 1.33
+ranched.abundances <- ceiling(wild.abundances * rnorm(n = n.years, mean = ratio.wild.farmed, sd = .15))
 plot(wild.abundances, ranched.abundances)
-curve(1 * x, col = 'grey', add = T)
+curve(ratio.wild.farmed * x, col = 'grey', add = T)
 
-#################  main structure of the data table ###########
-### columns of the table
+# main structure of the data table ==================================================
 
 salmons.var <- c('year',
                  'julian.day',
@@ -43,49 +44,41 @@ salmons <- matrix(nrow = sum(c(wild.abundances, ranched.abundances)), ncol = len
                   dimnames = list(NULL,
                                   salmons.var))
 salmons <- as.data.frame(salmons)
+#dim(salmons)
+#head(salmons)
 
-dim(salmons)
-head(salmons)
-
-############# ranched an wild fish ##################
+# wild or ranched =================================================
 
 salmons$wild <- c(rep(1, sum(wild.abundances)), rep(2, sum(ranched.abundances))) 
-table(salmons$wild)
+#table(salmons$wild)
 
-############## year capture ##########################
+# year capture ============================================================
 
 salmons$year <- c(rep(year.start:year.end, times = wild.abundances),
-                        rep(year.start:year.end, times = ranched.abundances))
+                  rep(year.start:year.end, times = ranched.abundances))
 hist(salmons$year)
 
-############# salmon sea age #########################
-### no difference between ranched and wild
+# ages of fish =================================================================
 
-#salmons$sea.age <- sample(size = dim(salmons)[1], x = 1:4, prob = c(0.6, 0.25, 0.10, 0.05), replace = T)
-
+# dirchlet parameters for increasing proportion 1sw fish
 prob.ages.year <- matrix(nrow = n.years, ncol = 4)
-
-for (j in 1:n.years){
-  prob.ages.year[j , ] <- c(64 * (1 + .15 * (j - 1)), 
-                             128, 
-                             32, 
-                             16)
+for (y in 1:n.years){
+  prob.ages.year[y , ] <- c(64 * (1 + .15 * (y - 1)), 
+                            128, 
+                            32, 
+                            16)
 }
 
-#rdirichlet(1, prob.ages.year[n.years, ])
-
-plot(prob.ages.year[ , 1])
-
-for (i in 1:dim(salmons)[1]){
-  salmons$sea.age[i] <- sample(size = 1, x = 1:4, 
+# sapply loop to sample fish age
+salmons$sea.age <- sapply(1:dim(salmons)[1], 
+                          function(i){
+                            sample(size = 1, x = 1:4, 
                                    prob = rdirichlet(1, alpha = prob.ages.year[salmons$year[i] - min(salmons$year) + 1, ]),
                                    replace = T)
-}
+                          } )
+#hist(salmons$sea.age)
 
-hist(salmons$sea.age)
-
-############# salmon river age #######################
-### wild smolt olders
+# salmon river age ==================================================================
 
 wild.row.max <- max(which(salmons$wild == 1))
 
@@ -94,8 +87,20 @@ salmons$river.age[(wild.row.max + 1):dim(salmons)[1]] <- sample(size = dim(salmo
 
 hist(salmons$river.age ~ salmons$wild )  
 
-################ day capture  ##########################
-### age  + wild effect
+# salmon river ========================================================
+
+rivers.names <- c('corrib', 'moy', 'oir', 'scorff', 'nivelle')
+salmons$river <- rivers.names[n = sample(dim(salmons)[1], x = 1:5, replace = T, 
+                                         prob = c(.29, .26, .1, .2, .15))]
+summary(salmons)
+
+# salmon country ======================================================
+
+salmons$country <- 'fr'
+salmons$country[salmons$river %in% c('corrib', 'moy')] <- 'ie'
+
+
+# day of capture with age + year + wild effect ==================================
 
 salmons$julian.day <- 90 + 
   (salmons$sea.age == 1) * 50 +
@@ -104,85 +109,58 @@ salmons$julian.day <- 90 +
   rnorm(dim(salmons)[1], 0, 10)
 hist(salmons$julian.day)
 
-################# sex   ##############################
-### more males in 1 SW
+# sex, more males in 1 SW =========================================================================
 
 sw1 <- which(salmons$sea.age == 1)
 swm <- which(salmons$sea.age != 1)
-salmons$sex[sw1] <- sample (size = length(sw1), x = 1:2, prob = c(65, 35), replace = T)
-salmons$sex[swm] <- sample (size = length(swm), x = 1:2, prob = c(20, 80), replace = T)
+salmons$sex[sw1] <- sample(size = length(sw1), x = 1:2, prob = c(65, 35), replace = T)
+salmons$sex[swm] <- sample(size = length(swm), x = 1:2, prob = c(20, 80), replace = T)
 
-################ length ##############################
-### effect of age + wild 
+# length, Von model with age, country effect and time =============================================  
 
-salmons$length <- 65 +
-  15 * (salmons$sea.age - 1) -
-  .3 * (salmons$year - year.start - 1) +
-  0.02 *  salmons$julian.day +
-  5 * salmons$wild+
-  rnorm(dim(salmons)[1], mean = 0, sd = 5 * (1 + (salmons$sea.age - 1) / 4)) 
-salmons$length <- salmons$length
-hist(salmons$length)
+source('growth.r')
 
-################ weight ##############################
-### wild fish plumper
+# weight through length weight relationship ======================================================
 
-salmons$weight <- exp(-5  +  3 * log(salmons$length) + rnorm(dim(salmons)[1], 0, .1)) / 1000
+salmons$weight <- exp(- 5 + .2 * (salmons$wild == 1)  +  3 * log(salmons$length) + 
+                        rnorm(dim(salmons)[1], 0, .1)) / 1000 # for grams to kg
 salmons$weight <- round(salmons$weight, 2)
 hist(salmons$weight)
-plot( salmons$length, salmons$weight, col = salmons$wild)
+plot(salmons$length, salmons$weight, col = salmons$wild)
 
-######################################################
-### sea lice infection logit age
+# sea lice infection logit age ==================================================================
 
 salmons$sea.lice <- inv.logit( -2 + 0.075 * (salmons$length - mean(salmons$length)) + rnorm(dim(salmons)[1], 0, .2))
 salmons$sea.lice <- rbinom(n = dim(salmons)[1], size = 1 ,  prob = salmons$sea.lice)
 plot(salmons$length, salmons$sea.lice)
 
-
-#####################################################
-### add river name
-
-rivers.names <- c('corrib', 'moy', 'oir', 'scorff', 'nivelle')
-salmons$river <- as.factor(rivers.names[n = sample(dim(salmons)[1], x = 1:5, replace = T)])
-summary(salmons)
-
-#####################################################
-### add NA in data
+# add NA in data ===================================================
 
 n.na <- 300
 
+# pick random location for na
 na.rows <- sample(size = n.na, x = 1:dim(salmons)[1], replace = F)
 na.cols <- sample(size = n.na, x = 1:dim(salmons)[2], replace = T)
 
+# modify to na
 for (i in 1: n.na) salmons[na.rows[i], na.cols[i]] <- NA
 
+# weight outliers, grams instead kg  ===============================================
 
-#####################################################
-### day outliers
+weight.issue.index <- sample(78, x = 1:dim(salmons)[1], replace = F)
+salmons$weight[weight.issue.index] <- salmons$weight[weight.issue.index] * 1000
 
-salmons$julian.day[sample(size = 500, x = 1:dim(salmons)[1], replace = F)] <- sample(size = 50, x = 367:450, replace = T)
+# length outliers, conversion issue inches ==========================================
+length.issue.index <- salmons$year == 2007 & salmons$country == 'ie'
+salmons$length[length.issue.index] <- salmons$length[length.issue.index] / 2.54
 
-#####################################################
-### weight outliers, conversion issue
-weight.conv.issue <- sample(size = 500, x = 367:450, replace = T)
-salmons$weight[weight.conv.issue ] <- salmons$weight[weight.conv.issue ] * 1000
-
-#####################################################
-###length outliers, conversion issue inches
-length.conv.issue <- sample(size = 500, x = 367:450, replace = T)
-salmons$length[length.conv.issue ] <- salmons$length[length.conv.issue ] / 2.54
-
-####################################################
-#### infected as true or false
+# infected as true or false =======================================================
 salmons$sea.lice <- as.logical(salmons$sea.lice)
 
-####################################################
-#### break lines order
+# break lines order ==================================================================
 salmons <- salmons[sample(size = dim(salmons)[1] , x = 1:dim(salmons)[1], replace = F), ]
 
-######################################################
-### write.table
+# write data in files =================================================================
 
 write.table(salmons, file = 'salmon.data.raw.txt', sep =',', dec = '.', row.names = F)
 write.table(salmons, file = 'salmon.data.raw.2.txt', sep =';', dec = ',', row.names = F)
