@@ -93,3 +93,38 @@ x2
 
 # 4
 seq(from = 100, to = 5, by = -5)
+
+
+## Exo 2.2.11
+
+# 1
+(seq5 <- 1:5)
+
+# 2
+names(seq5)
+
+letters[1:5]
+
+names(seq5) <- letters[1:5]
+seq5
+
+# 3
+seq5[c(2, 4)]
+seq5[c("b", "d")]
+seq5[seq5 %in% c(2, 4)]
+
+seq5 > 3
+seq5[seq5 > 3]
+which(seq5 > 3)
+
+length(seq5[seq5 > 3])
+
+# 4
+size <- rnorm(n = 10, mean = 30, sd = 3)
+print(size)
+
+size[size >= 33]
+which(size >= 33)
+
+length(size[size >= 33])  # OR
+length(which(size >= 33))
