@@ -32,6 +32,7 @@ mat[c(3, 1) , c(TRUE, FALSE, TRUE)]
 
 # "simplification" by R:
 mat[ , 1]         # You've selected one column but you get one "row"!!?
+class(mat)
 class(mat[ , 1])  # ... Okay, it's been changed in a vector
 
 mat[ , 1, drop=FALSE]         # That sounds better
@@ -95,6 +96,7 @@ nrow(dataf)
 ncol(dataf)
 
 dataf[dataf$treatment, ]  # Selection of rows using   #$ used to identify a row or column name in a bigger dataset
+dataf[ ! dataf$treatment, ]
 
 # But I'm actually only interested in the value for those who had the treatment:
 dataf[dataf$treatment, "value"]  # Okay, thats it. 
@@ -223,6 +225,12 @@ as.numeric(fact2)    # !!! You may have a "numeric label" which doesn't match th
 as.character(fact2)
 as.numeric(as.character(fact2))
 
+age <- factor(c(1:10, "11+"))
+age
+
+as.numeric(age)
+as.numeric(as.character(age))
+
 # => Always do explicitely the conversion if you have any doubt about
 #    which way the factor will behave.
 
@@ -258,6 +266,9 @@ format(x = now,                 # Formating POSIXct works just the same.
 
 ## ------------------
 ## 3.6 Ordering data:
+
+shortNamedVect <- 1:5
+names(shortNamedVect) <- letters[1:5]
 
 shortNamedVect  # Unordered vector
 sort(shortNamedVect)

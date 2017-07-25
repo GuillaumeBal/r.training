@@ -53,8 +53,8 @@ var(salmonRaw$length, na.rm = TRUE)   # Variance.
 ## behaviour of logical:
 sum(c(TRUE, FALSE, TRUE))  # behave as 0/1 => sum counts the number of TRUE
 
-sum(salmonRaw$sea_age >= 4, na.rm=TRUE)  # Number of individuals spending 4y or more at sea
-mean(salmonRaw$sea_age >= 4, na.rm=TRUE) # Proportion _____________________________________
+sum(salmonRaw$sea.age >= 4, na.rm=TRUE)  # Number of individuals spending 4y or more at sea
+mean(salmonRaw$sea.age >= 4, na.rm=TRUE) # Proportion _____________________________________
 
 sum(is.na(salmonRaw$year))  # Number of samples for which the year wasn't reported.
 
@@ -66,19 +66,19 @@ quantile(x = salmonRaw$length, na.rm=TRUE,
 
 
 ## Repartition of values / contingency tables:
-table(salmonRaw$sea_lice)
-table(salmonRaw$sea_lice, useNA = "ifany")
+table(salmonRaw$sea.lice)
+table(salmonRaw$sea.lice, useNA = "ifany")
 
-table(salmonRaw$wild, salmonRaw$sea_lice, useNA = "ifany")
+table(salmonRaw$wild, salmonRaw$sea.lice, useNA = "ifany")
 
 table(wild = salmonRaw$wild,            # Note that you can name the variable
-      "sea Lice" = salmonRaw$sea_lice,  # to avoid confusion (with or without "").
+      "sea Lice" = salmonRaw$sea.lice,  # to avoid confusion (with or without "").
       useNA = "ifany")
 
 ## Useful tip to avoid repeating the call to the data.frame name:
 with(salmonRaw,                  # Working in a seperate environment...
      table(wild = wild,          # where columns are seen as separate objects.
-           "sea lice" = sea_lice,
+           "sea lice" = sea.lice,
            useNA = "ifany"))
 
 

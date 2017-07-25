@@ -1,4 +1,4 @@
-### Next
+### next
 mymat <- matrix(nrow = 5, ncol = 5) # create a 20 x 20 matrix
 
 for(i in 1:dim(mymat)[1]){  # for each row
@@ -13,7 +13,7 @@ for(i in 1:dim(mymat)[1]){  # for each row
 
 print(mymat)
 
-### break:
+### break
 mymat <- matrix(nrow = 5, ncol = 5) # create a 20 x 20 matrix
 
 for(i in 1:dim(mymat)[1]){  # for each row
