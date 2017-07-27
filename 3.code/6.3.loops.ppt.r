@@ -5,7 +5,7 @@
 # basic for loop ======================================================================
 
 for(i in 1:10){
-  print(paste('row' , i,  sep = ''))
+  print(paste('hello' , i,  sep = ' '))
 }
 print(i)
 
@@ -42,9 +42,9 @@ for(i in 1:dim(mymat)[1]){  # for each row
     if(i * j < 20){
       mymat[i, j] = i * j # assign values based on position: product of two indexes
     }else{
-      #mymat[i, j] <- 'BIG'  
-      #break
-      next()  
+      mymat[i, j] <- 'BIG'  
+      #break()
+      #next()  
     }  
   }
 }

@@ -17,7 +17,7 @@ salmon <- read.table('salmon.data.raw.txt', sep = ',', dec = '.', h = TRUE)
 
 salmon$weight[!is.na(salmon$weight) & salmon$weight > 50] <- salmon$weight[!is.na(salmon$weight) & salmon$weight > 50] / 1000
 
-salmon$length[!is.na(salmon$length) & salmon$length < 40] <- salmon$length[!is.na(salmon$length) & salmon$length < 50] * 2.54
+salmon$length[!is.na(salmon$length) & salmon$length < 44] <- salmon$length[!is.na(salmon$length) & salmon$length < 44] * 2.54
 
 
 #plot length vs weight
