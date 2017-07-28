@@ -25,7 +25,7 @@ for(m in 1:n.matrices){
 # calculate mean per column for file ! =======================================
 
 # file location
-file.loc <- "C:/Users/gbal/Desktop/github.work/r.training/3.code/excel.vs.r/matrix.1.txt"
+file.loc <- "C:/Users/gbal/Desktop/r.training/3.code/excel.vs.r/matrix.1.txt"
 
 # load file
 data.1 <- read.table(file = file.loc)
@@ -40,7 +40,7 @@ apply(X = data.1, MARGIN = 1, FUN = mean)
 time.start <- Sys.time()
 
 # location files 
-wd.files <-  "C:/Users/gbal/Desktop/github.work/r.training/3.code/excel.vs.r"
+wd.files <-  "C:/Users/gbal/Desktop/r.training/3.code/excel.vs.r"
 
 # get list of files 
 list.files <- dir(wd.files)
@@ -50,10 +50,14 @@ means.list <- list()
 
 # fill list
 for(i in 1:length(list.files)){
-
-  means.list[[list.files[i]]] <- apply(read.table(paste0(wd.files, '/',list.files[i])), 
-                                       2, 
-                                       mean)
+#i <- 1
+  file.name <- paste0(wd.files, '/',list.files[i])
+  data <- read.table(file.name)
+  dim(data)
+  mean.c <- apply(data, 
+                 2, 
+                 mean)
+  means.list[[list.files[i]]] <- mean.c 
   
 }
 

@@ -57,9 +57,9 @@ optimx.fit <- optimx(par = c(1, 1, 1),
                      fn = length.weight, 
                      length = salmon$length, 
                      weight = salmon$weight * 1000,
-                     #method = optimx.methods.selected 
-                     #control = list(save.failures = TRUE)
-                     control = list(all.methods = TRUE, save.failures = TRUE)
+                     method = optimx.methods.selected, 
+                     control = list(save.failures = TRUE)
+                     #control = list(all.methods = TRUE, save.failures = TRUE)
 )
 
 # check fit ====================================================================
