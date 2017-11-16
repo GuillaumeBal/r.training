@@ -13,7 +13,7 @@ dim(salmon.data)
 head(salmon.data)
 
 # change weight in g into kg
-salmon.data$weight[salmon.data$weight > 50] <- 
+salmon.data$weight[salmon.data$weight > 50] <-
   salmon.data$weight[salmon.data$weight > 50] / 1000
 
 # open new graphic windows
@@ -26,11 +26,11 @@ par(mfrow = c(4, 6), mar = c(3, 3, 2, 0.5)+0.1,
 # plot lenght weight relationship per year
 by(data = salmon.data,
    INDICES = list(salmon.data$year),
-   FUN = function(salmon.data){
-     plot(x = salmon.data$length,
-          y = salmon.data$weight,
+   FUN = function(dataf){
+     plot(x = dataf$length,
+          y = dataf$weight,
           col = "blue", pch = ".",
-          main = salmon.data$year[1])
+          main = dataf$year[1])
    })
 
 # open new graph windows
