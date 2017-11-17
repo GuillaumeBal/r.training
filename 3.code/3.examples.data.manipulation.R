@@ -15,6 +15,8 @@
 (mat <- matrix(data = 1:12, ncol=3, 
                dimnames = list(letters[1:4], LETTERS[1:3])))
 
+mat[1, ]        # First row
+mat[ , 2]       # Second column
 
 mat[3:4, 2:3]    # Extraction by position
 mat[4:3, 2:3]    # The same inversing the rows order.

@@ -2,95 +2,14 @@
 ## 2. Basics of the R language:
 ## ----------------------------
 
-#####################################################################################
-## -----------------------------
-## 2.1 Concepts and conventions:
-
-## ---------------
-## 2.1.1 Console / Scripts / Comments:
-
-## This file is a script!
-##
-## Usefull tip in R-studio: send the code line by line (or a selection) to the console using
-## ctrl + Enter
-
-# I am a comment, I won't be evaluated!
-### ... and the number of "#" does not really matters
-
-
-message("Hello ",    # I can also comment the end of a line...
-        "World")     # ...even if the instruction isn't completed!
-
-## Note that the former block is strictly equivalent to:
-
-message("Hello ", "World")  # ...so instructions can be splitted
-                            # on several lines.
-
-## --------------------------------------
-## 2.1.2 Variable declaration/assignment:
-myVar <- 1
-print(myVar)
-
-## !!!
-_myvar <- 2     # a variable name cannot begin with _
-1myvar <- 2     # nor a digit.
-
-my_var1 <- 2    # ... but they can be used somewhere else.
-my_var1         # Note that when an object is evaluated in the console
-                # it is simply printed
-
-## !!! case sensitive:
-myvar
-myVar
-
-## ----------------------------
-## 2.1.3 Invoquing a functions:
-
-## A function usually takes arguments and use the to fulfil a task.
-
-rep(x=myVar, times=5)  # using named arguments.
-rep(times=5, x=myVar)  # ... the order doesn't matter.
-
-rep(myVar, 5)   # using the order of arguments (risk of error!)
-rep(5, myVar)   # !!! to use only with usual functions which have few - surely known - arguments.
-
-
-
-## Note that the result of a function may very well be stored in a variable:
-myVar5rep <- rep(x=myVar, times=5)
-print(myVar5rep)
-
-## --------------------------------
-## 2.1.4 Getting help on functions:
-?rep   # have a look to the help panel if in R-studio!
-?mode
-
-help(rep)   # Equivalent to ?rep
-
-## Help on a topic:
-help.search('generalized linear model')
-??"working directory"
-
-## Search tool in a browser:
-help.start()
-
-
-## ------------------------
-## 2.1.5 Working directory:
-
-getwd()
-
-## setwd("<C:/path/to/my/working/dir/>")
-
-## ## setwd("P:/0_r_training/3_R_code")
 
 #####################################################################################
 ## ------------
-## 2.2 Vectors:
+## 2.1 Vectors:
 ## ------------
 
 ## ------------
-## 2.2.1 Types:
+## 2.1.1 Types:
 
 ## Numeric (integer and double):
 var1.1 <- as.integer(12)
@@ -106,10 +25,10 @@ typeof(var1.2)
 var2 <- "Hello world!"
 mode(var2)
 
-(var2.1 <- '"Hello world" again!')  # You can use simple quotes as well 
+(var2.1 <- '"Hello world" again!')  # You can use simple quotes as well
 (var2.2 <- "c'est la vie")          # (for including double quotes and vice versa).
-                                    # Please note: 
-                                    #   * how double quotes *within* the resulting 
+                                    # Please note:
+                                    #   * how double quotes *within* the resulting
                                     #     character string are "escaped" with \.
                                     #   * the use of brackets to force the evaluation of the result.
 
@@ -134,10 +53,10 @@ mode(z)
 
 
 ## ------------------------------
-## 2.2.2 The vector structures:
+## 2.1.2 The vector structures:
 
 ## Vectors:
-vect1 <- c(1, 5, 0.23)  # c() concatenate elements in a vector 
+vect1 <- c(1, 5, 0.23)  # c() concatenate elements in a vector
                         #     (except when elements are lists).
 
 is.vector(vect1)  # We check that it actually is a vector.
@@ -164,7 +83,7 @@ logical(2)
 
 
 ## ------------------------------
-## 2.2.3 Vector-like structures:
+## 2.1.3 Vector-like structures:
 
 ## Factors:
 fact1 <- factor(c("a", "b", "a", "cd"))
@@ -189,7 +108,7 @@ as.numeric(today)  # number of days since 01/01/1970
 as.numeric(now)    # number of seconds since 01/01/970 00:00:00
 
 ##  -------------------------------------
-## 2.2.4 Querying vectors caracteristics:
+## 2.1.4 Querying vectors caracteristics:
 
 ## Length:
 
@@ -207,7 +126,7 @@ names(vect1.1)  # To access the names
 names(vect1.1) <- c("a", "b", "c")
 vect1.1
 
-(vect1.1 <- c(a = 1, "bb" = 5, 0.23))  
+(vect1.1 <- c(a = 1, "bb" = 5, 0.23))
 names(vect1.1)  # To access the names
 
 names(vect1.1) <- c("a", "b", "c")
@@ -228,7 +147,7 @@ fact1
 nlevels(fact1)  # actual number of levels
 
 ##  -------------------------
-## 2.2.5 Vectors' arithmetic:
+## 2.1.5 Vectors' arithmetic:
 
 
 ## Note the vectorization:
@@ -257,17 +176,17 @@ abs(c(-2, 0, 3))          # Absolute value.
                           # ...
 
 ##  ---------------------------
-## 2.2.6 Comparisons and tests:
+## 2.1.6 Comparisons and tests:
 
 
-## 2.2.6.1 Comparison operators:
+## 2.1.6.1 Comparison operators:
 
 c("a", "b", "c") ==
   c("a", "B", "c")    # remember... R is case sensitive!
 
 c(1, 2, 3) == c(1.000, 2.000, 3.000001)
 
-c(2, sqrt(3)^2) == c(2, 3)   # Beware of the machine precision ! 
+c(2, sqrt(3)^2) == c(2, 3)   # Beware of the machine precision !
                              #   (this is obviously a wrong outcome)
 all.equal(c(2, sqrt(3)^2), c(2, 3))
 
@@ -280,7 +199,7 @@ Sys.Date() <= c("1916-04-24", "1994-04-05", "2017-07-25")  # Note the automatic 
 c("1916-04-24", "1994-04-05", "2017-07-25") >= Sys.Date()  # ... which works both ways O_o
 
 ## ------------------------------------
-## 2.2.6.2 Testing for indefinite values:
+## 2.1.6.2 Testing for indefinite values:
 
 (varnull <- NULL)    # An empty variable.
 is.null(varnull)
@@ -293,7 +212,7 @@ is.finite(c(-Inf, 500, NA, NaN))    # Some value can be "available" but not fini
 is.infinite(c(-Inf, 500, NA, NaN))
 
 ## -----------------------------------
-## 2.2.6.3 Sets:
+## 2.1.6.3 Sets:
 
 someChar <- c("a", "2", "z", "?")
 print(letters)    # letters contains by default the 26 letters of the latin alphabet.
@@ -309,9 +228,9 @@ match(someChar, letters)  # match() get the corresponding positions in the refer
 
 
 ##  -----------------------
-## 2.2.7 Logical operators:
+## 2.1.7 Logical operators:
 
-## 2.2.7.1 Vectorised operators:
+## 2.1.7.1 Vectorised operators:
 
 cond1 <- c(TRUE, FALSE, FALSE, NA)
 cond2 <- c(TRUE, TRUE, FALSE, TRUE)
@@ -321,20 +240,20 @@ cond1 | cond2       # __________ "OR"             ... note: NA has no influence 
 xor(cond1, cond2)   # __________ exclusive "OR"
 ! cond1             # __________ "NOT"
 
-## 2.2.7.2 Tests among elements of a vector:
+## 2.1.7.2 Tests among elements of a vector:
 
 all(c(TRUE, TRUE))       # Are all the elements TRUE
 
-all(c(TRUE, FALSE, NA))  # Example of NAs consistency: we can reject the 
+all(c(TRUE, FALSE, NA))  # Example of NAs consistency: we can reject the
                          # "all" condition in the first case...
 all(c(TRUE, TRUE, NA))   # we cannot accept nor reject it in the second one.
 
 any(c(FALSE, TRUE, FALSE, NA)) # Is at least one element TRUE?
 
 
-## 2.2.7.3 Long - not vectorised - versions:
+## 2.1.7.3 Long - not vectorised - versions:
 
-cond1 && cond2       # Only the first element of each 
+cond1 && cond2       # Only the first element of each
 cond1 || cond2       # logical vector is used
 
 # Wants to test if a variable exists AND is a data.frame?
@@ -346,10 +265,10 @@ exists("dummyVar") && class(dummyVar) == "data.frame"
 
 
 ##  -----------------------------
-## 2.2.8 Sequences & repetitions:
+## 2.1.8 Sequences & repetitions:
 
 
-## 2.2.8.1 Sequences:
+## 2.1.8.1 Sequences:
 
 seq(from=0, to=100, by=10)
 seq(from=0, by=10, length.out=10)
@@ -363,7 +282,7 @@ seq_len(10)   # Sequence starting at 1, with an increment of 1 and of length 10.
 seq_along(c(7, 5, 0, 1, 3, 2))  # indices of a vector.
 # same as seq(from=1, along.with=c(7, 5, 0, 1, 3, 2), by=1)
 
-## 2.2.8.2 Repetitions:
+## 2.1.8.2 Repetitions:
 rep(x=1:3, times=2)
 rep(x=1:3, each=2)
 
@@ -371,7 +290,7 @@ rep(x=1:3, each=2)
 rev(1:10)
 
 ## ---------------------------------------
-## 2.2.9 Mind the precedence of operators:
+## 2.1.9 Mind the precedence of operators:
 ##       (always use brackets if not sure)
 
 # e.g. cubic root:
@@ -390,14 +309,14 @@ c(1, 8, 27, 64)^(1/3)  # is the cubic root.
 ??Synthax
 
 ## ----------------------------
-## 2.2.10 Indexing vector data:
+## 2.1.10 Indexing vector data:
 
 namedVect <- seq_along(letters)
 names(namedVect) <- letters
 
 print(namedVect)
 
-## 2.2.10.1 Access by position:
+## 2.1.10.1 Access by position:
 namedVect[c(1, 26, 15, 35)]   # Note:
 #   1) you choose the order in which elements are extracted.
 #   2) the NAs for indices outside of range.
@@ -410,7 +329,7 @@ shortNamedVect <- namedVect[1:5]  # Storing a subset...
 
 shortNamedVect
 
-## 2.2.10.2 by logical indexation:
+## 2.1.10.2 by logical indexation:
 shortNamedVect[c(TRUE, FALSE, TRUE, FALSE, TRUE)]  # Note that you cannot choose the output order.
 shortNamedVect[c(TRUE, FALSE, TRUE)]   # !!! If the index hasn't the same length, it is recycled!
 
@@ -418,7 +337,7 @@ shortNamedVect[c(TRUE, FALSE, TRUE)]   # !!! If the index hasn't the same length
 namedVect[namedVect >= 19]  # selection of data using tests of course!
 
 
-## 2.2.10.3 By element names:
+## 2.1.10.3 By element names:
 namedVect[c("f", "e", "a", "s")]  # Here also you choose the order
                                   # in which the elements are extracted.
 
@@ -426,7 +345,7 @@ namedVect[c("f", "e", "a", "s")]  # Here also you choose the order
 namedVect[c(-1, -26)]
 
 ## --------------------------------------------
-## 2.2.11 modification of a subset of a vector:
+## 2.1.11 modification of a subset of a vector:
 
 ## Change as you access:
 
@@ -445,13 +364,13 @@ namedVect
 
 #####################################################################################
 ## -----------------------------
-## 2.3. Further data structures:
+## 2.2. Further data structures:
 ## -----------------------------
 
 ## --------------------------------
-## 2.3.1 Data types and structures:
+## 2.2.1 Data types and structures:
 
-## 2.3.1.1 Matrices:
+## 2.2.1.1 Matrices:
 mat1 <- matrix(data = c(1, 2, 3, 4, 5, 6),
                ncol = 2)  # nrow is implicit but could be forced as well (see ?matrix).
 
@@ -468,18 +387,18 @@ mat2 <- cbind(c(1, 2, 3),   # Binding two (or more) column vectors.
               c(4, 5, 6))
 mat2
 
-rbind(mat2,  
-      c(7, 8),  # Binding row vectors 
-      matrix(c(9, 10, 11, 12), ncol=2)) # (or matrices, provided that they have the same 
+rbind(mat2,
+      c(7, 8),  # Binding row vectors
+      matrix(c(9, 10, 11, 12), ncol=2)) # (or matrices, provided that they have the same
 # number of columns).
 
 matrix(data = c(1, 2, 3, 4, 5, 6),
        ncol = 2,
        dimnames = list("Indiv"=c("a", "b", "c"),   # Dimensions can be fully named.
-                       "vars"=c("var1", "var2"))) 
+                       "vars"=c("var1", "var2")))
 
 
-## 2.3.1.2 Arrays: 
+## 2.2.1.2 Arrays:
 
 ## same as matrix but no limitation in the number of dimensions.
 arr1 <- array(data = c(1, 2, 3, 4, 5, 6, 7, 8),
@@ -487,9 +406,9 @@ arr1 <- array(data = c(1, 2, 3, 4, 5, 6, 7, 8),
 
 arr1
 
-## 2.3.1.3 Lists: the catchall structure!
+## 2.2.1.3 Lists: the catchall structure!
 
-list1 <- list(c("a", "b"), 
+list1 <- list(c("a", "b"),
               number = c(1, 8, 14, 0))
 
 list2 <- list(mat = matrix(c(1, 2, 6, 7), nrow=2),
@@ -499,7 +418,7 @@ list1
 list2
 
 # Concatenation of lists:
-listTot <- c(list1, list2,   
+listTot <- c(list1, list2,
              Conversion = c("a character vector implicitly turned to a list",  # Also try to embed
                             "(of character vectors)",                          # this last c(...) in a list().
                             "to make the concatenation possible."))
@@ -507,7 +426,7 @@ listTot <- c(list1, list2,
 listTot
 
 
-## 2.3.1.4 data.frame (~table of data):
+## 2.2.1.4 data.frame (~table of data):
 
 ## ... one of the most commonly used structures in R!!!
 
@@ -521,7 +440,7 @@ dataf$indiv # column "indiv"... implicitly turned to a factor
 
 
 ## ---------------------
-## 2.3.2 Matrix algebra:
+## 2.2.2 Matrix algebra:
 diag(3)
 diag(c(2, 1, 4, 3))
 
@@ -534,7 +453,7 @@ t(mat)  # Transpose.
 solve(mat)  # Inversion.
 
 # (rowvect <- matrix(c(1, 2), nrow=1))
-# 
+#
 # rowvect %*% mat
 
 mat * mat    # Caution: entry-wise multiplication, not a matrix multiplication
