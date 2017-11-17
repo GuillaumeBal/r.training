@@ -1,10 +1,36 @@
-# load salmon data and check object dimensions
-
 rm(list = ls()) # clean environment
 
 # modify working directory
 wd <- "C:/Users/gbal/Desktop/r.training/2.data"
 setwd(wd)
+
+# n values to generate
+n.values <- 50
+
+# create two random series of 1 and 2
+random.1.2.a <- sample.int(n = 2, size = n.values, replace = TRUE)
+random.1.2.b <- sample.int(n = 2, size = n.values, replace = TRUE)
+
+# create data frame with 2 quantitative and 2 qualitative columns
+my.data.frame <- data.frame(a = runif(n.values),
+                            b = rnorm(n.values, mean = 10, sd = 1),
+                            age = c('1sw', '2sw')[random.1.2.a],
+                            sex = c('female', 'male')[random.1.2.b])
+
+# 2 by 2 plot area
+par(mfrow = c(2, 2))
+
+# plot a and b by combination of age and sex
+by(data = my.data.frame,
+   INDICES = list(my.data.frame[, 3],  my.data.frame[ , 4]),
+   FUN = function(x) plot(x[ , 1], x[ , 2],
+                          main = paste(x[1, 3],
+                                       x[1, 4],
+                                       sep = ' / ')))
+
+
+###################################################################################
+### other example using salmon data
 
 # read salmon data
 #salmon.data <- read.table('salmon.data.raw.txt', sep = ';', dec = ',', header = TRUE)
