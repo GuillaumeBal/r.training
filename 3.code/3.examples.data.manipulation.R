@@ -168,7 +168,7 @@ dataf
 (datasub1 <- dataf[dataf$value > 10.5, ])
 
 dataf[c(-1, -4), ]   # removing rows by position (equivalent dataf[-c(1, 4), ])
-dataf[ , -4]         # removing columns by position.
+dataf <- dataf[ , -4]         # removing columns by position.
 
 
 datasub2 <- subset(x = dataf, 

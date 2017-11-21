@@ -99,3 +99,50 @@ x2
 seq(from = 100, to = 0, by = -5)
 rev(seq(from = 0, to = 100, by = 5))
 
+## 2.1.11:
+
+## 1)
+seq(from = 1, to = 5, by = 1)
+seq_len(5)
+1:5
+
+seq5 <- 1:5
+seq5
+
+## 2)
+letters[1:5]
+seq5names <- letters[seq5]
+seq5names
+
+names(seq5) <- seq5names
+seq5
+
+## 3)
+seq5[c(2, 4)]
+seq5[(1:2) * 2]
+seq5[c("b", "d")]
+seq5[letters[c(2, 4)]]
+
+seq5 > 3
+seq5[seq5 > 3]
+seq5 > 3 & seq5 < 5
+seq5[seq5 > 3 & seq5 < 5]
+
+## 4:
+length(seq5)
+seq5[length(seq5)]
+# tail(x = seq5, n = 4)
+
+## 5)
+size <- rnorm(n = 10, mean = 30, sd = 3)
+size
+
+idx33 <- size >= 33
+size[idx33]
+which(idx33)
+
+## 6)
+size[idx33] <- NA
+size
+size[]
+
