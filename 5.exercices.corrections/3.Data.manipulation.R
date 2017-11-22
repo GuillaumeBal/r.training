@@ -61,7 +61,8 @@ peopleSub6$irish <- NULL
 peopleSub6[ , "irish"] <- NULL
 
 ## 3)
-peopleSub6[peopleSub6$age >= 26 , ]
+peopleSub6$age >= 26
+peopleSub6[peopleSub6$age >= 26 , ] 
 
 subset(x = peopleSub6,
        age >= 26)
@@ -86,6 +87,7 @@ sort(people$age, decreasing = TRUE)
 
 ## 3):
 people[order(people$section, people$age, na.last = FALSE) , ]
+
 peopleOrdered <- people[order(people$section, people$age) , ]
 peopleOrdered
 
