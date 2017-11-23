@@ -28,7 +28,7 @@ for(i in 1:nrow(mymat)){  # for each row
   
   for(j in 1:ncol(mymat)){ # for each column
     
-    Sys.sleep(1)
+    Sys.sleep(2)
     cat("\014")
     message("\ni = ", i, "\nj = ", j, "\ni * j = ", i * j, "\n")
     
@@ -50,11 +50,12 @@ mymat <- matrix(nrow = 5, ncol = 5) # create a 5 x 5 matrix
 for(i in 1:nrow(mymat)){  # for each row
   for(j in 1:ncol(mymat)){ # for each column
     
-    Sys.sleep(0.8)
+    Sys.sleep(2)
     cat("\014")
     message("\ni = ", i, "\nj = ", j, "\ni * j = ", i * j, "\n")
     
     if((i * j > 7) && (i * j < 14)) {
+      message("Breaks loop over j (jumps to next iteration of i)!!!")
       print(mymat)
       break()  ## Stops the current loop (over values of j)! 
                ## => jumps directly to the next row.
