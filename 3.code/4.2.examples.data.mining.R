@@ -9,6 +9,7 @@
 #
 # salmonRaw <- read.table(file="../2.data/salmon.data.raw.txt",
 #                         header=TRUE, sep=" ", dec=".")
+salmonRaw <- salmonLocal
 
 dim(salmonRaw)    # You cannot print everything on the screen!
 

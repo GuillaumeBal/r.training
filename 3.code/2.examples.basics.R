@@ -15,7 +15,8 @@
 var1.1 <- as.integer(12)
 var1.2 <- 3.54
 
-mode(var1.1) ; mode(var1.1)  # ";" used for separating instructions on a same line.
+mode(var1.1) 
+mode(var1.1)  # ";" used for separating instructions on a same line.
                              # ... you would usually avoid using it!
 
 typeof(var1.1)
