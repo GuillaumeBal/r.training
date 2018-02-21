@@ -14,7 +14,7 @@ salmonRaw <- salmonLocal
 dim(salmonRaw)    # You cannot print everything on the screen!
 
 ## ------------------------------------
-## 4.2.1 Preview and structure of data:
+## 4.2.1-2 Preview and structure of data:
 
 
 # You already know how to extract a few rows:
@@ -38,7 +38,7 @@ summary(salmonRaw)          # summary by column.
 summary(salmonRaw[ , c(1, 3, 6:8, 10)])
 
 ## -----------------------
-## 4.2.2 Basic statistics:
+## 4.2.3 Basic statistics:
 
 ## Central tendency:
 mean(salmonRaw$length)                  # NA sensitive =>
@@ -66,7 +66,8 @@ quantile(x = salmonRaw$length, na.rm=TRUE,
          probs = c(0.025, 0.975))           # You can change the calculated quantiles.
 
 
-## Repartition of values / contingency tables:
+## -------------------------------------------------
+## 4.2.4 Repartition of values / contingency tables:
 table(salmonRaw$sea.lice)
 table(salmonRaw$sea.lice, useNA = "ifany")
 

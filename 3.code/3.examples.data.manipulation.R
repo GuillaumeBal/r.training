@@ -2,17 +2,14 @@
 ## 3. Data manipulation in R:
 ## --------------------------
 
-## ------------------
-## 3.3 Indexing data:
-
 ## ------------------------------------------------------------------
-## 3.3.1 Accessing/extracting a part of a data set - case of vectors:
+## 3.1 Accessing/extracting a part of a data set - case of vectors:
 
 ## Cf. previous example file!
 
 ## ----------------------------------------
-## 3.3.2 When there are several dimensions:
-(mat <- matrix(data = 1:12, ncol=3, 
+## 3.2.1 When there are several dimensions:
+(mat <- matrix(data = 1:12, ncol=3,
                dimnames = list(letters[1:4], LETTERS[1:3])))
 
 mat[1, ]        # First row
@@ -43,7 +40,7 @@ class(mat[ , 1, drop=FALSE])  # ... much better (at least if you aimed at keepin
 
 
 ## ------------
-## 3.3.3 Lists:
+## 3.2.2 Lists:
 list1 <- list(vect1 = 1:5,
               mat = matrix(letters[1:9], nrow=3),
               empty = NULL)
@@ -71,7 +68,7 @@ list1[c("mat", "vect1")]   # Mind the order!
 list1[c(FALSE, TRUE, FALSE)]  # Note that even when only one element selected, it is still a list.
 
 ## ------------------
-## 3.3.4 Data.frames:
+## 3.2.3 Data.frames:
 
 dataf <- data.frame(Indiv = letters[1:5],
                     treatment = rep(c(FALSE, TRUE), length.out = 5),
@@ -80,7 +77,7 @@ dataf <- data.frame(Indiv = letters[1:5],
 dataf
 
 ## It's a list, so we can extract a list element (column) using list specific methods:
-dataf$value  # return the column as a vector.   
+dataf$value  # return the column as a vector.
              # Extensively used!
 
 dataf[[1]]   # Column 1 ; almost never used!
@@ -101,7 +98,7 @@ dataf[dataf$treatment, ]  # Selection of rows using   #$ used to identify a row 
 dataf[ ! dataf$treatment, ]
 
 # But I'm actually only interested in the value for those who had the treatment:
-dataf[dataf$treatment, "value"]  # Okay, thats it. 
+dataf[dataf$treatment, "value"]  # Okay, thats it.
                                  # But if for some reason I need to keep it a data.frame:
 
 (dataf2 <- dataf[dataf$treatment, "value", drop=FALSE])
@@ -122,12 +119,12 @@ dataf3
 dataf3[dataf3$value > 10 , , drop = FALSE]
 dataf3[which(dataf3$value > 10) , , drop = FALSE]
 
-# Only notable difference with indexation of matrices,  
+# Only notable difference with indexation of matrices,
 # a single row will NOT be converted in a vector (possibly different data types):
 dataf[1, ]  # Compare with mat[1, ] / mat[1, , drop = FALSE]
 
-## --------------------------------------
-## 3.3.5 Modification of subsets of data:
+## ------------------------------------
+## 3.3 Modification of subsets of data:
 
 ## Change as you access:
 
@@ -142,20 +139,20 @@ dataf
 
 ## Further example of the "change as you access" rule:
 names(list1)   # You can query the names using names().
-names(list1) <- c("Index", "someLetters", "nothing") # but you can also change element names 
+names(list1) <- c("Index", "someLetters", "nothing") # but you can also change element names
 list1                                                # using the function names()
 
 colnames(mat)
 colnames(mat)[2] <- "varB"  # You can even uses indices to only change some of the names.
 colnames(mat)
 
-## -----------------------------------------
-## 3.3.7 Indices and names for adding stuff:
+## -----------------------------------
+## Indices and names for adding stuff:
 ## shortNamedVect <- 1:5
 ## names(shortNamedVect) <- letters[1:5]
 shortNamedVect[8] <- 12     # Just for your information...
 shortNamedVect              # You'll generally rather concatenate vectors instead (function c(...)).
-shortNamedVect["ZZ"] <- 0 
+shortNamedVect["ZZ"] <- 0
 shortNamedVect
 
 mat
@@ -180,17 +177,17 @@ dataf[c(-1, -4), ]   # removing rows by position (equivalent dataf[-c(1, 4), ])
 dataf <- dataf[ , -4]         # removing columns by position.
 
 
-datasub2 <- subset(x = dataf, 
-                   value > 10.5)  # Note that the name of the column can be directly 
-                                  # used as a vector 
+datasub2 <- subset(x = dataf,
+                   value > 10.5)  # Note that the name of the column can be directly
+                                  # used as a vector
 
 datasub2  # strictly equivalent to the former method.
 
-subset(x = dataf, 
+subset(x = dataf,
        value > 10 & treatment)[ ,     # Combination of tests...
                                 c("Indiv", "value")]  # ...and selection of columns.
 
-subset(x = dataf, 
+subset(x = dataf,
        value > 10 & treatment,
        select = c("Indiv", "value")) # Even better, uses the features of "subset"!
 
@@ -205,13 +202,13 @@ as.numeric(c("1", "4.5", NA, "-12", "ImNotANumber"))
 
 
 ## To dates:
-(date1 <- as.Date(10419, origin="1970-01-01"))  # From numeric 
+(date1 <- as.Date(10419, origin="1970-01-01"))  # From numeric
                                                 # [call as.Date.numeric() in the background.]
 
 (date1 <- as.Date(c("2015-10-21")))   # From characters.
 class(date1)
 
-as.Date("31/12/2012")   # R is not very happy with non-US formats 
+as.Date("31/12/2012")   # R is not very happy with non-US formats
                         # (well, I guess it may depends on the locals)
 
 (date3 <- as.Date(x = "31/12/2012",     #  [call as.Date.character() in the background.]
@@ -222,7 +219,7 @@ as.Date("31/12/2012")   # R is not very happy with non-US formats
 ## -----------------------------------
 ## 3.5.2 [!!!] The duality of factors:
 
-fact1 <- factor(sample(x = c(letters[1:5], LETTERS[1:5]), 
+fact1 <- factor(sample(x = c(letters[1:5], LETTERS[1:5]),
                        size = 10,
                        replace = TRUE))
 
@@ -292,8 +289,8 @@ sort(dataf$value)
 order(dataf$value)
 dataf[order(dataf$value), ]  # ordering data by value.
 
-dataf <- dataf[order(dataf$treatment, 
-                     dataf$value, 
+dataf <- dataf[order(dataf$treatment,
+                     dataf$value,
                      decreasing = TRUE), ]  # ordering data by treatment, then value.
 
 dataf
