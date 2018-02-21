@@ -16,7 +16,7 @@ var1.1 <- as.integer(12)
 var1.2 <- 3.54
 
 mode(var1.1) 
-mode(var1.1)  # ";" used for separating instructions on a same line.
+mode(var1.2)  # ";" used for separating instructions on a same line.
                              # ... you would usually avoid using it!
 
 typeof(var1.1)
@@ -73,6 +73,7 @@ print(vect2)
 c("a", 2, TRUE)      # When differents types are mixed, the concatenation find a possible common
 c(TRUE, 0, 2, FALSE) # type through conversion rules (TRUE -> 1, FALSE -> 0 for numeric conv.).
 
+as.numeric(c("1.3", "0", "blabla"))
 # Note the position of the first element displayed between [] in
 # the console at the begining of every printed line:
 rep(1:20, 3)
@@ -106,7 +107,7 @@ mode(today) ; class(today)
 mode(now) ; class(now)
 
 as.numeric(today)  # number of days since 01/01/1970
-as.numeric(now)    # number of seconds since 01/01/970 00:00:00
+as.numeric(now)    # number of seconds since 01/01/1970 00:00:00
 
 ##  -------------------------------------
 ## 2.1.4 Querying vectors caracteristics:
@@ -344,6 +345,7 @@ namedVect[c("f", "e", "a", "s")]  # Here also you choose the order
 
 ## Particular case: selecting all but some elements:
 namedVect[c(-1, -26)]
+namedVect[-c(1, 26)]
 
 ## --------------------------------------------
 ## 2.1.11 modification of a subset of a vector:
@@ -377,7 +379,8 @@ mat1 <- matrix(data = c(1, 2, 3, 4, 5, 6),
 
 print(mat1)
 dim(mat1)   # dimensions: 3 rows and 2 columns.
-
+nrow(mat1)
+ncol(mat1)
 
 colnames(mat1)
 colnames(mat1) <- c("col1", "col2")  # See also row.names()
