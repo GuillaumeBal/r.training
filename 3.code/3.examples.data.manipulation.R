@@ -113,6 +113,15 @@ dataf[dataf$treatment, c("value", "Indiv"), drop=FALSE]
 
 dataf[ ! dataf$treatment, , drop=FALSE]
 
+dataf[dataf$value > 10 , , drop = FALSE]
+dataf[which(dataf$value > 10) , , drop = FALSE]
+
+dataf3 <- dataf
+dataf3[1, "value"] <- NA
+dataf3
+dataf3[dataf3$value > 10 , , drop = FALSE]
+dataf3[which(dataf3$value > 10) , , drop = FALSE]
+
 # Only notable difference with indexation of matrices,  
 # a single row will NOT be converted in a vector (possibly different data types):
 dataf[1, ]  # Compare with mat[1, ] / mat[1, , drop = FALSE]
