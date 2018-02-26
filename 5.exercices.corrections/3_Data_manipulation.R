@@ -78,6 +78,105 @@ people[sections %in% c("feas") &
 people[sections == c("feas") &
          people$age > 25, ]             # Issue with NA!
 
+people[which(sections == c("feas") &
+             people$age > 25), ]  
+
 people[(sections == c("feas") | is.na(sections))&
          people$age > 25, ]
 
+## 3.4 subset and data modification 2D:
+
+## 1) Create a new data.frame "peopleSub6" with the 6 first rows of people.
+
+## 1.1 sequence:
+seq(from = 1, to  = 6, by = 1)
+1:6
+
+## 1.2 subset:
+people[1:6 , , drop = FALSE]
+people[1:6 , ]
+
+
+## 1.3 save it in a new data.frame:
+peopleSub6 <- people[1:6 , ]
+
+
+## 2) Remove the column "Irish" from peopleSub6:
+colnames(peopleSub6)
+
+peopleSub6[ , -4]
+peopleSub6 <- peopleSub6[ , -4]
+peopleSub6
+
+## Alternative (better):
+peopleSub6$irish
+peopleSub6$irish <- NULL  ## Change it directly in the original object.
+peopleSub6
+
+
+## Alternative (fine but more complicated; and works for matrices as well):
+colnames(peopleSub6) %in% c("irish")
+-which(colnames(peopleSub6) %in% c("irish"))
+# name is not irish:
+! colnames(peopleSub6) %in% c("irish")
+peopleSub6 <- peopleSub6[ , ! colnames(peopleSub6) %in% c("irish")]
+
+cols2sup <- c("irish", "section")
+peopleSub6[ , ! colnames(peopleSub6) %in% cols2sup]
+
+## 3) Select the individuals in peopleSub6 with a "age" greater or equal to 26:
+## test:
+peopleSub6$age >= 26
+idx <- which(peopleSub6$age >= 26)
+
+## subset:
+peopleSub6[idx , ]
+
+## alternative using subset:
+subset(x = peopleSub6,
+       age >= 26)
+
+# Subset supresses NAs in test:
+subset(x = people, section == "feas")
+
+## 3.6, Conversion and order (Using the people data):
+
+## 1) 
+## 1.1) What is the class of the column "name"? 
+people$name
+class(people$name)
+
+## 1.2) Extract it as a character string (extract and convert).
+peopleNames <- people$name
+
+as.character(peopleNames)
+
+class(as.character(peopleNames))
+
+
+## 1.2) Transform it as a character string (make it permanent)
+peopleNamesCh <- as.character(peopleNames)
+people$name <- as.character(peopleNames)
+people$name
+
+## 2) Extract the sorted ages.
+people$age
+
+sort(people$age)
+sort(people$age, decreasing = TRUE)
+
+?sort
+
+## 3) Order people by "section" and "age" and 
+##    store it in a variable peopleOrdered
+
+## 3.1)
+people[order(people$section, people$age) , ]
+
+people[order(people$section, people$age, na.last = FALSE) , ]
+
+## 3.2)
+peopleOrdered <- people[order(people$section, people$age, na.last = FALSE) , ]
+peopleOrdered
+
+?order ## e.g method = "radix" for column-wise options.

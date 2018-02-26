@@ -143,6 +143,7 @@ names(list1) <- c("Index", "someLetters", "nothing") # but you can also change e
 list1                                                # using the function names()
 
 colnames(mat)
+colnames(mat)[2]
 colnames(mat)[2] <- "varB"  # You can even uses indices to only change some of the names.
 colnames(mat)
 

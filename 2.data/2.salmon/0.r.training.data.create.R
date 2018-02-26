@@ -159,7 +159,7 @@ na.rows <- sample(size = n.na, x = 1:dim(salmons)[1], replace = F)
 na.cols <- sample(size = n.na, x = 1:dim(salmons)[2], replace = T)
 
 # modify to na
-#for (i in 1: n.na) salmons[na.rows[i], na.cols[i]] <- NA
+for (i in 1: n.na) salmons[na.rows[i], na.cols[i]] <- NA
 
 # round some values ================================================================
 
@@ -169,7 +169,12 @@ salmons$wild <- (salmons$wild == 1) * 1
 salmons$sex[salmons$sex == 1] <- 'M'
 salmons$sex[salmons$sex == 2] <- 'F'
 
+n.dates <- 27
+salmons$julian.day[sample(1:nrow(salmons), size = n.dates, replace = FALSE)] <- sample(366:500, size = n.dates, replace = FALSE)
+
 # write data in files =================================================================
+
+summary(salmons)
 
 write.table(salmons, file = 'salmon.data.raw.txt', sep =',', dec = '.', row.names = F)
 write.table(salmons, file = 'salmon.data.raw.2.txt', sep =';', dec = ',', row.names = F)
