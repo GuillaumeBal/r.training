@@ -186,10 +186,15 @@ abs(c(-2, 0, 3))          # Absolute value.
 c("a", "b", "c") ==
   c("a", "B", "c")    # remember... R is case sensitive!
 
+# c("a", "b", "c", "B") ==
+#   c("a", "B")
+
 c(1, 2, 3) == c(1.000, 2.000, 3.000001)
 
 c(2, sqrt(3)^2) == c(2, 3)   # Beware of the machine precision !
                              #   (this is obviously a wrong outcome)
+c(2, sqrt(3^2)) == c(2, 3)
+
 all.equal(c(2, sqrt(3)^2), c(2, 3))
 
 c(2, sqrt(3)^2) - c(2, 3)
@@ -197,17 +202,20 @@ c(2, sqrt(3)^2) - c(2, 3)
 c(5, 3, 2, 3.01) > 3
 c(5, 3, 2, 3.01) >= 3
 
-Sys.Date() <= c("1916-04-24", "1994-04-05", "2017-07-25")  # Note the automatic conversion... again!
-c("1916-04-24", "1994-04-05", "2017-07-25") >= Sys.Date()  # ... which works both ways O_o
+Sys.Date() <= c("1916-04-24", "1994-04-05", "2018-11-25")  # Note the automatic conversion... again!
+c("1916-04-24", "1994-04-05", "2018-11-25") >= Sys.Date()  # ... which works both ways O_o
 
 ## ------------------------------------
 ## 2.1.6.2 Testing for indefinite values:
 
 (varnull <- NULL)    # An empty variable.
+myVar <- "test"
+mode(varnull)
 is.null(varnull)
 is.null(myVar)       # A variable which contain something is not null.
 is.null(dummyVar)    # but the variable has to exist anyway to be NULL (error otherwise).
 
+c(-Inf, 500, NA, 0/0)
 is.na(c(-Inf, 500, NA, NaN))        # Not available? (NA)
 is.nan(c(-Inf, 500, NA, NaN))       # NaN (Not a Number) is a kind of NA, but the inverse is not true.
 is.finite(c(-Inf, 500, NA, NaN))    # Some value can be "available" but not finite!
@@ -241,6 +249,18 @@ cond1 & cond2       # Vectorised "AND"
 cond1 | cond2       # __________ "OR"             ... note: NA has no influence as the corresponding cond2 is TRUE!
 xor(cond1, cond2)   # __________ exclusive "OR"
 ! cond1             # __________ "NOT"
+
+rd <- runif(n = 10, min = 0, max = 10)
+
+rd > 4
+rd < 6
+
+## in [4, 6]
+which(rd > 4 & rd < 6)
+
+## outside [4, 6]
+which(! (rd > 4 & rd < 6))
+which(rd < 4 | rd > 6)
 
 ## 2.1.7.2 Tests among elements of a vector:
 
