@@ -1,7 +1,7 @@
 #-*- coding: latin-1 -*-
 
 ### File: 1.2.Concepts.and.conventions.R
-### Time-stamp: <2017-11-17 15:16:31 yreecht>
+### Time-stamp: <2018-09-10 09:08:41 yreecht>
 ###
 ### Created: 17/11/2017	15:13:25
 ### Author: Yves Reecht
@@ -56,12 +56,12 @@ my_var1         # Note that when an object is evaluated in the console
 
 ## !!! case sensitive:
 myvar
-myVar
+myVaR
 
 ## ----------------------------
 ## 1.2.3 Invoquing a functions:
 
-## A function usually takes arguments and use the to fulfil a task.
+## A function usually takes arguments and use them to fulfil a task.
 
 rep(x=myVar, times=5)  # using named arguments.
 rep(times=5, x=myVar)  # ... the order doesn't matter.
