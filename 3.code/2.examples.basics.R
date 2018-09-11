@@ -346,6 +346,8 @@ namedVect[c(1, 26, 15, 35)]   # Note:
 idx <- c(1, 26, 15)    # obviously you can use a stored index vector,
 namedVect[idx]         # instead of hard coding it.
 
+namedVect[rev(idx)] 
+
 shortNamedVect <- namedVect[1:5]  # Storing a subset...
 # ...Using a sequence to select the first 5 elements.
 
@@ -358,10 +360,15 @@ shortNamedVect[c(TRUE, FALSE, TRUE)]   # !!! If the index hasn't the same length
 # Advantage ?
 namedVect[namedVect >= 19]  # selection of data using tests of course!
 
+testIdx <- namedVect <= 19 & namedVect >= 10
+namedVect[testIdx]
 
 ## 2.1.10.3 By element names:
 namedVect[c("f", "e", "a", "s")]  # Here also you choose the order
                                   # in which the elements are extracted.
+
+textIdx <- c("h", "e", "l", "l", "o")
+namedVect[textIdx]
 
 ## Particular case: selecting all but some elements:
 namedVect[c(-1, -26)]
@@ -378,6 +385,13 @@ namedVect
 
 ## ...by logical operator (test):
 namedVect[namedVect %in% c(13, 14, 16)] <- NA
+namedVect
+
+testIdx2 <- namedVect <= 6
+which(testIdx2) ## can be used for indexing by position
+namedVect[which(testIdx2)]
+
+namedVect[which(testIdx2)] <- 0
 namedVect
 
 ## ...by name:
