@@ -182,6 +182,11 @@ datasub2 <- subset(x = dataf,
                    value > 10.5)  # Note that the name of the column can be directly
                                   # used as a vector
 
+## Note the difference in handling NAs in tests:
+(datasub3 <- dataf3[dataf3$value > 10.5, ])
+(datasub4 <- subset(x = dataf3,
+                    value > 10.5))
+
 datasub2  # strictly equivalent to the former method.
 
 subset(x = dataf,
@@ -278,6 +283,7 @@ format(x = now,                 # Formating POSIXct works just the same.
 
 shortNamedVect <- 1:5
 names(shortNamedVect) <- letters[1:5]
+shortNamedVect[3] <- NA
 
 shortNamedVect  # Unordered vector
 sort(shortNamedVect)

@@ -6,9 +6,9 @@
 ## 4.2 basic statistics & data visualisation:
 
 # setwd("C:/Users/gbal/Desktop/r.training")
-#
-# salmonRaw <- read.table(file="../2.data/salmon.data.raw.txt",
-#                         header=TRUE, sep=" ", dec=".")
+# #
+salmonRaw <- read.table(file="../2.data/2.salmon/salmon.data.raw.txt",
+                        header=TRUE, sep=",", dec=".")
 ## or
 # salmonRaw <- salmon
 salmonRaw <- salmonLocal
@@ -31,6 +31,7 @@ head(salmonRaw$year)         # Works on vectors as well (and lists, matrices,...
 class(salmonRaw)
 sapply(salmonRaw, class)    # Class of every column
 
+sapply(salmonRaw, typeof)
 
 summary(salmonRaw$year)     # Summarise the information in the column
 summary(salmonRaw$river)    # The type of summary depends on the class/mode of the column.
