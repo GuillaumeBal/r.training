@@ -5,7 +5,7 @@
 ## =======================
 ## Exercises 4.1-1
 
-my.wd <-'Y:/Analyses/Other/CoursesAndTraining/R-begginer-course/2.data/2.salmon/'
+my.wd <-'C:/Users/gbal/Desktop/r.training/2.data/2.salmon/'
 setwd(my.wd)
 
 
@@ -30,7 +30,7 @@ write.table(salmon.raw,
 
 ## 1) Store salmonRaw (or whichever name you stored it in)
 ##    in a new "salmonTidy" data.frame.
-salmonTidy <- salmonRaw
+salmonTidy <- salmon.raw
 
 ## 2) Detect incorrect weights and correct them.
 ##    Check the mean/min/max weight before/after.
@@ -58,8 +58,19 @@ summary(salmonTidy$weight)
 
 ## 3) Recode the column "wild" (1 -> TRUE, 0 -> FALSE).
 ##    Display the number of TRUE/FALSE/NAs
+head(salmonTidy$wild) == 1
+
+as.logical(head(salmonTidy$wild))
+
+salmonTidy$wild <- salmonTidy$wild == 1
+
+head(salmonTidy)
 
 ## 4) Save it in a salmonTidy.csv file
+write.table(salmonTidy,
+            file = "salmonTidy.csv",
+            sep = ",", 
+            row.names = FALSE)
 
 ## 5) (optional) 
 ##    Remove entries with impossible dates (ignore leap years).
