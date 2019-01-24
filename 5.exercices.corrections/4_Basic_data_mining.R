@@ -58,6 +58,7 @@ summary(salmonTidy$weight)
 
 ## 3) Recode the column "wild" (1 -> TRUE, 0 -> FALSE).
 ##    Display the number of TRUE/FALSE/NAs
+summary(salmonTidy$wild)
 
 ## 4) Save it in a salmonTidy.csv file
 
